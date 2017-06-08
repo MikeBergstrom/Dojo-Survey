@@ -1,6 +1,8 @@
-from flask import Flask, render_template, request, redirect
-app= Flask(__name__)
+from flask import Flask, render_template, request, redirect, flash
+import re
 
+app= Flask(__name__)
+app.secret_key="sosecret"
 @app.route('/')
 def index():
     return render_template("index.html")
@@ -16,6 +18,16 @@ def create_users():
     location = request.form['location']
     language = request.form['language']
     comment = request.form['comment']
-    return render_template('results.html', name =name, location =location, language =language, comment=comment)
+    if len(request.form['name']) < 1:
+        flash("Name can not be blank")
+        return redirect('/')
+    elif len (request.form['comment']) < 1:
+        flash ("Comment can not be blank")
+        return redirect ('/')
+    elif len(request.form['comment']) > 120:
+        flash ("Comment can not be more than 120 characters")
+        return redirect('/')
+    else:
+        return render_template('results.html', name =name, location =location, language =language, comment=comment)
 
 app.run(debug=True)
