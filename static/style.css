@@ -1,0 +1,16 @@
+h1{
+    color: blue;
+}
+#form{
+    width: 250px;
+
+}
+body{
+    width: 400px;
+}
+#container{
+    display: inline-block;
+}
+#container p{
+    display: block;
+}
